@@ -1,0 +1,19 @@
+[project]
+name = "quantum-internet"
+version = "0.1.0"
+description = "Lightweight quantum internet toolkit for QIA Challenge 2025"
+authors = [{ name = "Quantum Internet Challenge Team" }]
+requires-python = ">=3.10"
+dependencies = [
+  "networkx>=3.0",
+]
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
