@@ -31,7 +31,12 @@ def run_cli(args: argparse.Namespace) -> None:
     network = build_sample_network()
     path: List[str] = args.path or network.shortest_path("alice", "bob")
 
-    result = entangle_path(network, path)
+    result = entangle_path(
+        network,
+        path,
+        swap_success_prob=args.swap_success_prob,
+        swap_fidelity_factor=args.swap_fidelity_factor,
+    )
     print("Selected path:", " -> ".join(result.path))
     print(f"Success probability: {result.success_probability:.4e}")
     print(f"Expected attempts: {result.expected_attempts:.2f}")
@@ -44,6 +49,24 @@ def parse_args(argv: List[str] | None = None) -> argparse.Namespace:
         "--path",
         nargs="+",
         help="Explicit path of node names to entangle (default: shortest path)",
+    )
+    parser.add_argument(
+        "--swap-success-prob",
+        type=float,
+        default=0.5,
+        help=(
+            "Per-intermediate-node probability of successful entanglement swap "
+            "(default: 0.5)"
+        ),
+    )
+    parser.add_argument(
+        "--swap-fidelity-factor",
+        type=float,
+        default=0.95,
+        help=(
+            "Multiplicative fidelity factor applied per entanglement swap "
+            "(default: 0.95)"
+        ),
     )
     return parser.parse_args(argv)
 
